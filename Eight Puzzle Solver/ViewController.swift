@@ -12,8 +12,9 @@ class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let easy = [ 1, 3, 4, 8, 6, 2, 7, 0, 5]
+        
+        solve(puzzle: easy, with: .BreadthFirst)
     }
 
     override var representedObject: Any? {

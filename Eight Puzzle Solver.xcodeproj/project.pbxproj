@@ -11,6 +11,10 @@
 		2359353421F20A2200E15FF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359353321F20A2200E15FF0 /* ViewController.swift */; };
 		2359353621F20A2400E15FF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2359353521F20A2400E15FF0 /* Assets.xcassets */; };
 		2359353921F20A2400E15FF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2359353721F20A2400E15FF0 /* Main.storyboard */; };
+		2359354221F20C9B00E15FF0 /* StateSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354121F20C9B00E15FF0 /* StateSpace.swift */; };
+		2359354421F20F3000E15FF0 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354321F20F3000E15FF0 /* State.swift */; };
+		2359354621F2103B00E15FF0 /* EightPuzzleSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354521F2103B00E15FF0 /* EightPuzzleSolver.swift */; };
+		2359354821F25D2800E15FF0 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354721F25D2700E15FF0 /* PriorityQueue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +25,10 @@
 		2359353821F20A2400E15FF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2359353A21F20A2400E15FF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2359353B21F20A2400E15FF0 /* Eight_Puzzle_Solver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Eight_Puzzle_Solver.entitlements; sourceTree = "<group>"; };
+		2359354121F20C9B00E15FF0 /* StateSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSpace.swift; sourceTree = "<group>"; };
+		2359354321F20F3000E15FF0 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		2359354521F2103B00E15FF0 /* EightPuzzleSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EightPuzzleSolver.swift; sourceTree = "<group>"; };
+		2359354721F25D2700E15FF0 /* PriorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +67,10 @@
 				2359353721F20A2400E15FF0 /* Main.storyboard */,
 				2359353A21F20A2400E15FF0 /* Info.plist */,
 				2359353B21F20A2400E15FF0 /* Eight_Puzzle_Solver.entitlements */,
+				2359354121F20C9B00E15FF0 /* StateSpace.swift */,
+				2359354321F20F3000E15FF0 /* State.swift */,
+				2359354521F2103B00E15FF0 /* EightPuzzleSolver.swift */,
+				2359354721F25D2700E15FF0 /* PriorityQueue.swift */,
 			);
 			path = "Eight Puzzle Solver";
 			sourceTree = "<group>";
@@ -133,8 +145,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2359354221F20C9B00E15FF0 /* StateSpace.swift in Sources */,
 				2359353421F20A2200E15FF0 /* ViewController.swift in Sources */,
 				2359353221F20A2200E15FF0 /* AppDelegate.swift in Sources */,
+				2359354621F2103B00E15FF0 /* EightPuzzleSolver.swift in Sources */,
+				2359354421F20F3000E15FF0 /* State.swift in Sources */,
+				2359354821F25D2800E15FF0 /* PriorityQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

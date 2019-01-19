@@ -9,7 +9,7 @@
 import Cocoa
 
 class ViewController: NSViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let easy = [ 1, 3, 4, 8, 6, 2, 7, 0, 5]
@@ -25,4 +25,6 @@ class ViewController: NSViewController {
 
 
 }
+
+
 

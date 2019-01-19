@@ -13,8 +13,9 @@
 		2359353921F20A2400E15FF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2359353721F20A2400E15FF0 /* Main.storyboard */; };
 		2359354221F20C9B00E15FF0 /* StateSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354121F20C9B00E15FF0 /* StateSpace.swift */; };
 		2359354421F20F3000E15FF0 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354321F20F3000E15FF0 /* State.swift */; };
-		2359354621F2103B00E15FF0 /* EightPuzzleSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354521F2103B00E15FF0 /* EightPuzzleSolver.swift */; };
 		2359354821F25D2800E15FF0 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354721F25D2700E15FF0 /* PriorityQueue.swift */; };
+		2359354A21F2A8A500E15FF0 /* PuzzleSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354921F2A8A500E15FF0 /* PuzzleSolver.swift */; };
+		2359354C21F2A9B700E15FF0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2359354B21F2A9B700E15FF0 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +28,9 @@
 		2359353B21F20A2400E15FF0 /* Eight_Puzzle_Solver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Eight_Puzzle_Solver.entitlements; sourceTree = "<group>"; };
 		2359354121F20C9B00E15FF0 /* StateSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSpace.swift; sourceTree = "<group>"; };
 		2359354321F20F3000E15FF0 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		2359354521F2103B00E15FF0 /* EightPuzzleSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EightPuzzleSolver.swift; sourceTree = "<group>"; };
 		2359354721F25D2700E15FF0 /* PriorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		2359354921F2A8A500E15FF0 /* PuzzleSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSolver.swift; sourceTree = "<group>"; };
+		2359354B21F2A9B700E15FF0 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +71,9 @@
 				2359353B21F20A2400E15FF0 /* Eight_Puzzle_Solver.entitlements */,
 				2359354121F20C9B00E15FF0 /* StateSpace.swift */,
 				2359354321F20F3000E15FF0 /* State.swift */,
-				2359354521F2103B00E15FF0 /* EightPuzzleSolver.swift */,
 				2359354721F25D2700E15FF0 /* PriorityQueue.swift */,
+				2359354921F2A8A500E15FF0 /* PuzzleSolver.swift */,
+				2359354B21F2A9B700E15FF0 /* Helpers.swift */,
 			);
 			path = "Eight Puzzle Solver";
 			sourceTree = "<group>";
@@ -146,10 +149,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2359354221F20C9B00E15FF0 /* StateSpace.swift in Sources */,
+				2359354C21F2A9B700E15FF0 /* Helpers.swift in Sources */,
 				2359353421F20A2200E15FF0 /* ViewController.swift in Sources */,
 				2359353221F20A2200E15FF0 /* AppDelegate.swift in Sources */,
-				2359354621F2103B00E15FF0 /* EightPuzzleSolver.swift in Sources */,
 				2359354421F20F3000E15FF0 /* State.swift in Sources */,
+				2359354A21F2A8A500E15FF0 /* PuzzleSolver.swift in Sources */,
 				2359354821F25D2800E15FF0 /* PriorityQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

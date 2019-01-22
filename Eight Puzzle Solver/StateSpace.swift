@@ -12,37 +12,64 @@
 import Foundation
 
 public class StateSpace {
-    private let root: State
+    // Data Structure used for Breadth/Depth First
+    private var list = [State]()
+    // Data Sturcture used for all other algorithms
     private let queue: PriorityQueue
+    private let algorithm: Algorithm
     
     public var solved = false
     public var popped = [State]()
     
+    
     init(with start: [Int], using algorithm: Algorithm) {
-        self.root = State(action: .down, currentState: start, depth: 0, parent: nil, pathCost: 0)
-        self.queue = PriorityQueue(start: root, using: algorithm)
+        self.algorithm = algorithm
+        self.queue = PriorityQueue(using: algorithm)
+        let startState = State(action: .down, currentState: start, depth: 0, parent: nil, pathCost: 0)
+        queue.insert(node: startState)
+    }
+   
+    public func peek() -> State {
+        switch algorithm {
+        case .BreadthFirst:
+            return list[list.count - 1]
+        case .DepthFirst:
+            return list[0]
+        default:
+            return queue.getMin()
+        }
     }
     
-    public func getRoot() -> State {
-        return root
-    }
+    // To-Do
+    public func pop() -> State {
+        popped.append(peek())
+        
+        switch algorithm {
+        case .BreadthFirst:
+            return peek()
+        case .DepthFirst:
+            return peek()
+        default:
+            return peek()
+        }
     
-    public func pop() {
-        // Returns the next node to expand
+        return queue.deleteMin()
     }
     
     public func push(state: State) {
-        stateCheck()
-        queue.insert(node: state)
+        switch algorithm {
+        case .BreadthFirst:
+            list.append(state)
+        case .DepthFirst:
+            list.insert(state, at: 0)
+        default:
+            queue.insert(node: state)
+        }
+        stateCheck(for: state)
     }
     
-    private func stateCheck() {
-        // Need to iterate over queue for duplicates
-        // Need to delete duplicates with higher cost
-        debug(msg: "Checking State... again!")
-    }
-    
-    private func stateCheck(for state: State) -> Bool {
-        return queue.contains(state: state)
+    // To-Do
+    private func stateCheck(for state: State) {
+        debug(msg: "RCS for \(state.flat)")
     }
 }

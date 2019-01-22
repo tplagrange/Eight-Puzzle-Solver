@@ -5,7 +5,7 @@
 //  Created by Lagrange, Thomas on 1/18/19.
 //  Copyright © 2019 Thomas Lagrange. All rights reserved.
 //
-//  Implementation of Priority Queue with a Min Heap
+//  Implementation of Priority Queue with a Binary Min Heap
 
 import Foundation
 
@@ -14,11 +14,12 @@ class PriorityQueue {
     private var size: Int
     private let algorithm: Algorithm
     
-    init(start: State, using algorithm: Algorithm) {
-        self.size = 1
-        self.array = [State]()
+    init(using algorithm: Algorithm) {
         self.algorithm = algorithm
-        insert(node: start)
+        self.array = [State]()
+        self.size = 0
+        // Inserting the goal state at index 0; binary heap operations assume array indices >= 1
+        array.append(State(action: .up, currentState: [1,2,3,8,0,4,7,6,5], depth: 0, parent: nil, pathCost: -1))
     }
     
     public func isEmpty() -> Bool {
@@ -32,43 +33,65 @@ class PriorityQueue {
     public func insert(node: State) {
         array.append(node)
         size += 1
-        heapify(at:size)
+        heapify(at: size - 1)
     }
     
-    private func heapify(at index: Int) {
-        return
-    }
-    
-    private func compare(state node: State, to otherNode: State) -> Int {
-        
-        return 0
-    }
-    
-    public func min() {
+    public func getMin() -> State {
         // Returns lowest cost node, according to algorithm
+        return array[1]
     }
     
-    public func delMin() -> State {
+    public func deleteMin() -> State {
         // Returns and removes the lowest cost node
         // AKA Pop!
-        swap(index: 0, and: size - 1)
+        let min = self.getMin()
+        if (algorithm == .BreadthFirst) {
+            array.remove(at: 1)
+            return min
+        }
+        swap(index: 1, and: size - 1)
         size -= 1
-        return array.remove(at: size)
+        heapify(at: 1)
+        return min
+    }
+    
+    // To-Do
+    public func contains(state: State) -> Bool {
+        // Check if another state with the same representation exists
+        // If yes, delete (all) with highest costs
+        return true
+    }
+   
+    private func heapify(at index: Int) {
+        // First let's check that parent/child relationship is appropriate
+        var percolate = index
+        while percolate > 1 && compare(index: percolate/2, and: percolate) {
+            swap(index: percolate, and: percolate/2)
+            percolate /= 2
+        }
+        
+        // Also check that sibling relationship is appropriate
+        var trickle = index
+        while 2 * trickle <= size {
+            var leftChild = 2 * trickle
+            if leftChild < size && compare(index: leftChild, and: leftChild + 1) {
+                leftChild += 1
+            }
+            if !compare(index: trickle, and: leftChild) {
+                break
+            }
+            swap(index: trickle, and: leftChild)
+            trickle = leftChild
+        }
+    }
+    
+    private func compare(index i: Int, and j: Int) -> Bool {
+        return array[i].getCost(using: algorithm) > array[j].getCost(using: algorithm)
     }
     
     private func swap(index i: Int, and j: Int) {
         let swap = array[i]
         array[i] = array[j]
         array[j] = swap
-    }
-    
-    private func delete(state: State) {
-        //Delete the specified node
-    }
-    
-    public func contains(state: State) -> Bool {
-        // Check if another state with the same representation exists
-        // If yes, delete (all) with highest costs
-        return true
     }
 }

@@ -14,19 +14,11 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
     
     // 5 minute limit to execution of this function
     while (!stateSpace.solved) {
-        successor(of: nil, in: stateSpace)
+        successor(of: stateSpace.peek(), in: stateSpace)
     }
 }
 
-private func successor(of state:State?, in stateSpace: StateSpace) {
-    // If the passed state is nil; we're at the root
-    let previousState: State
-    if (state == nil) {
-        previousState = stateSpace.getRoot()
-    } else {
-        previousState = state!
-    }
-    
+private func successor(of previousState: State, in stateSpace: StateSpace) {
     // Determine which square is blank
     let blank = previousState.blankIndex()
     debug(msg: "Blank index set to \(blank)")
@@ -89,25 +81,25 @@ private func successor(of state:State?, in stateSpace: StateSpace) {
         // First we will create a duplicate representation of the state
         var newRepresentation = [Int](repeating: 0, count: squares)
         for i in 0..<squares {
-            newRepresentation[i] = previousState.representation[i]
+            newRepresentation[i] = previousState.flat[i]
         }
         
         // Create a new state depending on the move
         switch legalMove {
         case .up:
-            tile = previousState.representation[(row-1) * 3 + col]
+            tile = previousState.flat[(row-1) * 3 + col]
             newRepresentation[row * 3 + col] = tile
             newRepresentation[(row-1) * 3 + col] = 0
         case .right:
-            tile = previousState.representation[row * 3 + col + 1]
+            tile = previousState.flat[row * 3 + col + 1]
             newRepresentation[row * 3 + col] = tile
             newRepresentation[row * 3 + col + 1] = 0
         case .down:
-            tile = previousState.representation[(row+1) * 3 + col]
+            tile = previousState.flat[(row+1) * 3 + col]
             newRepresentation[row * 3 + col] = tile
             newRepresentation[(row+1) * 3 + col] = 0
         case .left:
-            tile = previousState.representation[row * 3 + col - 1]
+            tile = previousState.flat[row * 3 + col - 1]
             newRepresentation[row * 3 + col] = tile
             newRepresentation[row * 3 + col - 1] = 0
         }

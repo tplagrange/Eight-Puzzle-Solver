@@ -13,24 +13,57 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
     let stateSpace = StateSpace(with: initialState, using: algorithm)
     
     // 5 minute limit to execution of this function
-    while (!stateSpace.solved) {
-        successor(of: stateSpace.peek(), in: stateSpace)
+    while (true) {
+        // Error out if we have an empty state space, this means we couldn't find a goal path
+        if stateSpace.isEmpty() {
+            debug(msg: "[ERROR] state space is empty")
+            return
+        }
+        
+        // Remove node from the "frontier"
+        let nextState = stateSpace.pop()
+        
+        debug(msg: "\(nextState.flat)")
+        
+        // Check for goal state
+        if nextState.isGoal() {
+            outputGoal(from: nextState)
+            return
+        }
+        
+        // Expand node
+        let successors = successor(of: nextState, in: stateSpace)
+        
+        // Add the states to our state space iff they are not already there and haven't been expanded
+        for successor in successors {
+            if stateSpace.popped.contains(where: { $0.equalTo(other: successor) }) {
+//                debug(msg: "Skipping state \(successor.flat) because already popped")
+            } else if stateSpace.contains(state: successor) {
+//                debug(msg: "Skipping state \(successor.flat) because already in state space")
+            } else {
+                stateSpace.push(state: successor)
+            }
+        }
+        
+        
     }
 }
 
-private func successor(of previousState: State, in stateSpace: StateSpace) {
+private func successor(of previousState: State, in stateSpace: StateSpace) -> [State] {
+    var successors = [State]()
+    
     // Determine which square is blank
     let blank = previousState.blankIndex()
-    debug(msg: "Blank index set to \(blank)")
+//    debug(msg: "Blank index set to \(blank)")
     
     // Layout the space as a square to determine the next legal moves
     let squareEdgeSize = Int(Double(squares).squareRoot())
-    debug(msg: "Square edge was set to \(squareEdgeSize)")
+//    debug(msg: "Square edge was set to \(squareEdgeSize)")
     
     // Determine the position of the blank in the square
     let row = blank / squareEdgeSize
     let col = blank % squareEdgeSize
-    debug(msg: "Blank is at \(row),\(col)")
+//    debug(msg: "Blank is at \(row),\(col)")
     
     // Determine which moves can be made from the blank (imagined as the blank is moving)
     var legalMoves = [Action]()
@@ -46,28 +79,28 @@ private func successor(of previousState: State, in stateSpace: StateSpace) {
             newCol = col
             if newRow >= 0 {
                 legalMoves.append(theoreticalMove)
-                debug(msg: "We can move up")
+//                debug(msg: "We can move up")
             }
         case .right:
             newRow = row
             newCol = col + 1
             if newCol < squareEdgeSize {
                 legalMoves.append(theoreticalMove)
-                debug(msg: "We can move right")
+//                debug(msg: "We can move right")
             }
         case .down:
             newRow = row + 1
             newCol = col
             if newRow < squareEdgeSize {
                 legalMoves.append(theoreticalMove)
-                debug(msg: "We can move down")
+//                debug(msg: "We can move down")
             }
         case .left:
             newRow = row
             newCol = col - 1
             if newCol >= 0 {
                 legalMoves.append(theoreticalMove)
-                debug(msg: "We can move left")
+//                debug(msg: "We can move left")
             }
         }
     }
@@ -105,8 +138,24 @@ private func successor(of previousState: State, in stateSpace: StateSpace) {
         }
         
         // Instantiate new state using generated parameters
-        let newState = State(action: legalMove, currentState: newRepresentation, depth: previousState.depth + 1, parent: previousState, pathCost: previousState.pathCost + tile)
+        let newState = State(action: legalMove, currentState: newRepresentation, depth: previousState.depth + 1, parent: previousState, pathCost: previousState.getCost(using: stateSpace.algorithm) + tile)
         
-        stateSpace.push(state: newState)
+        successors.append(newState)
+    }
+    
+    return successors
+}
+
+private func outputGoal(from state: State) {
+    var currentState = state
+    var goalPath = [State]()
+    while currentState.parent != nil {
+        goalPath.insert(currentState, at: 0)
+        currentState = currentState.parent!
+    }
+    goalPath.insert(currentState, at: 0)
+    for goalStep in goalPath {
+        print(goalStep.toString())
+        print("")
     }
 }

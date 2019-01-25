@@ -18,7 +18,7 @@ class PriorityQueue {
         self.algorithm = algorithm
         self.array = [State]()
         self.size = 0
-        // Inserting the goal state at index 0; binary heap operations assume array indices >= 1
+        // Inserting trivial state at index 0; binary heap operations assume array indices >= 1
         array.append(State(action: .up, currentState: [1,2,3,8,0,4,7,6,5], depth: 0, parent: nil, pathCost: -1))
     }
     
@@ -33,7 +33,7 @@ class PriorityQueue {
     public func insert(node: State) {
         array.append(node)
         size += 1
-        heapify(at: size - 1)
+        heapify(at: size)
     }
     
     public func getMin() -> State {
@@ -45,21 +45,29 @@ class PriorityQueue {
         // Returns and removes the lowest cost node
         // AKA Pop!
         let min = self.getMin()
-        if (algorithm == .BreadthFirst) {
-            array.remove(at: 1)
-            return min
-        }
-        swap(index: 1, and: size - 1)
+        swap(index: 1, and: size)
         size -= 1
         heapify(at: 1)
         return min
     }
     
-    // To-Do
+    public func delete(this state: State) {
+        var index = 1
+        for node in array {
+            if node === state {
+//                debug(msg: "Deleting: \(node.flat)")
+                swap(index: index, and: size)
+                size -= 1
+                heapify(at: index)
+                return
+            }
+            index += 1
+        }
+//        debug(msg: "State to delete not found.")
+    }
+    
     public func contains(state: State) -> Bool {
-        // Check if another state with the same representation exists
-        // If yes, delete (all) with highest costs
-        return true
+        return array.contains(where: { $0.equalTo(other: state) })
     }
    
     private func heapify(at index: Int) {

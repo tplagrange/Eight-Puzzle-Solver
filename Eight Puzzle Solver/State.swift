@@ -38,6 +38,18 @@ public class State {
         }
     }
     
+    public func isGoal() -> Bool {
+        if self.flat.elementsEqual(goal) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    public func equalTo(other state: State) -> Bool {
+        return flat.elementsEqual(state.flat)
+    }
+    
     // To-Do
     private func heuristic1() -> Int {
         // Number of incorrectly placed tiles
@@ -64,9 +76,9 @@ public class State {
         return
 """
 \(flat[0])--\(flat[1])--\(flat[2])
-| | |
+|  |  |
 \(flat[3])--\(flat[4])--\(flat[5])
-| | |
+|  |  |
 \(flat[6])--\(flat[7])--\(flat[8])
 """
     }

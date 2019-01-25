@@ -69,10 +69,10 @@
 				2359353721F20A2400E15FF0 /* Main.storyboard */,
 				2359353A21F20A2400E15FF0 /* Info.plist */,
 				2359353B21F20A2400E15FF0 /* Eight_Puzzle_Solver.entitlements */,
+				2359354921F2A8A500E15FF0 /* PuzzleSolver.swift */,
 				2359354121F20C9B00E15FF0 /* StateSpace.swift */,
 				2359354321F20F3000E15FF0 /* State.swift */,
 				2359354721F25D2700E15FF0 /* PriorityQueue.swift */,
-				2359354921F2A8A500E15FF0 /* PuzzleSolver.swift */,
 				2359354B21F2A9B700E15FF0 /* Helpers.swift */,
 			);
 			path = "Eight Puzzle Solver";

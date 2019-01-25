@@ -19,11 +19,12 @@ public class StateSpace {
 
     public let algorithm: Algorithm
     public var popped = [State]()
+
     
     init(with start: [Int], using algorithm: Algorithm) {
         self.algorithm = algorithm
         self.queue = PriorityQueue(using: algorithm)
-        let startState = State(action: .down, currentState: start, depth: 0, parent: nil, pathCost: 0)
+        let startState = State(action: .down, currentState: start, depth: 0, parent: nil, tile: 0)
         if (algorithm == .BreadthFirst || algorithm == .DepthFirst) {
             list.append(startState)
         } else {

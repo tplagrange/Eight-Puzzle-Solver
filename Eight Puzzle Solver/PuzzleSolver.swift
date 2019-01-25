@@ -23,11 +23,12 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
         // Remove node from the "frontier"
         let nextState = stateSpace.pop()
         
-        debug(msg: "\(nextState.flat)")
+//        debug(msg: "\(nextState.flat)")
         
         // Check for goal state
         if nextState.isGoal() {
-            outputGoal(from: nextState)
+            debug(msg: "Found goal state at depth \(nextState.depth)")
+//            outputGoal(from: nextState)
             return
         }
         
@@ -138,7 +139,7 @@ private func successor(of previousState: State, in stateSpace: StateSpace) -> [S
         }
         
         // Instantiate new state using generated parameters
-        let newState = State(action: legalMove, currentState: newRepresentation, depth: previousState.depth + 1, parent: previousState, pathCost: previousState.getCost(using: stateSpace.algorithm) + tile)
+        let newState = State(action: legalMove, currentState: newRepresentation, depth: previousState.depth + 1, parent: previousState, tile: tile)
         
         successors.append(newState)
     }

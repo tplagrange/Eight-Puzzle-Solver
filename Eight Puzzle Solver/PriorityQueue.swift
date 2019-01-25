@@ -19,7 +19,7 @@ class PriorityQueue {
         self.array = [State]()
         self.size = 0
         // Inserting trivial state at index 0; binary heap operations assume array indices >= 1
-        array.append(State(action: .up, currentState: [1,2,3,8,0,4,7,6,5], depth: 0, parent: nil, pathCost: -1))
+        array.append(State(action: .up, currentState: [1,2,3,8,0,4,7,6,5], depth: 0, parent: nil, tile: -1))
     }
     
     public func isEmpty() -> Bool {
@@ -44,7 +44,7 @@ class PriorityQueue {
     public func deleteMin() -> State {
         // Returns and removes the lowest cost node
         // AKA Pop!
-        let min = self.getMin()
+        let min = getMin()
         swap(index: 1, and: size)
         size -= 1
         heapify(at: 1)
@@ -55,7 +55,7 @@ class PriorityQueue {
         var index = 1
         for node in array {
             if node === state {
-//                debug(msg: "Deleting: \(node.flat)")
+                debug(msg: "Deleting: \(node.flat)")
                 swap(index: index, and: size)
                 size -= 1
                 heapify(at: index)
@@ -63,7 +63,7 @@ class PriorityQueue {
             }
             index += 1
         }
-//        debug(msg: "State to delete not found.")
+        debug(msg: "State to delete not found.")
     }
     
     public func contains(state: State) -> Bool {

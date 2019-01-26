@@ -41,4 +41,7 @@ public enum Algorithm {
 public let squares = 9      // The number of squares in our puzzle
 public let theoreticalMoves = [Action.up, Action.right, Action.down, Action.left]
 public let debugSetting = true
-public let goal = [1, 2, 3, 8, 0, 4, 7, 6, 5]
+public let goal =   [1, 2, 3, 8, 0, 4, 7, 6, 5]
+public let easy =   [ 1, 3, 4, 8, 6, 2, 7, 0, 5 ]
+public let medium = [ 2, 8, 1, 0, 4, 3, 7, 6, 5 ]
+public let hard =   [ 5, 6, 7, 4, 0, 8, 3, 2, 1 ]

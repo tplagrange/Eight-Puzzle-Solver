@@ -11,7 +11,6 @@ import Foundation
 // Initiate attempt to find solution
 public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
     let stateSpace = StateSpace(with: initialState, using: algorithm)
-    
     // 5 minute limit to execution of this function
     while (true) {
         // Error out if we have an empty state space, this means we couldn't find a goal path
@@ -23,12 +22,9 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
         // Remove node from the "frontier"
         let nextState = stateSpace.pop()
         
-//        debug(msg: "\(nextState.flat)")
-        
         // Check for goal state
         if nextState.isGoal() {
-            debug(msg: "Found goal state at depth \(nextState.depth)")
-//            outputGoal(from: nextState)
+            outputGoal(from: nextState)
             return
         }
         
@@ -38,15 +34,18 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
         // Add the states to our state space iff they are not already there and haven't been expanded
         for successor in successors {
             if stateSpace.popped.contains(where: { $0.equalTo(other: successor) }) {
-//                debug(msg: "Skipping state \(successor.flat) because already popped")
+                continue
             } else if stateSpace.contains(state: successor) {
-//                debug(msg: "Skipping state \(successor.flat) because already in state space")
+                if algorithm == .BreadthFirst || algorithm == .DepthFirst {
+                    continue
+                } else {
+                    // If we are using an algorithm that compares cost, push it and worry about state checking after pushing
+                    stateSpace.push(state: successor)
+                }
             } else {
                 stateSpace.push(state: successor)
             }
         }
-        
-        
     }
 }
 
@@ -139,7 +138,7 @@ private func successor(of previousState: State, in stateSpace: StateSpace) -> [S
         }
         
         // Instantiate new state using generated parameters
-        let newState = State(action: legalMove, currentState: newRepresentation, depth: previousState.depth + 1, parent: previousState, tile: tile)
+        let newState = State(action: legalMove, currentState: newRepresentation, depth: previousState.depth + 1, parent: previousState, tile: tile, using: stateSpace.algorithm)
         
         successors.append(newState)
     }
@@ -155,8 +154,11 @@ private func outputGoal(from state: State) {
         currentState = currentState.parent!
     }
     goalPath.insert(currentState, at: 0)
+    var totalCost = 0
     for goalStep in goalPath {
-        print(goalStep.toString())
-        print("")
+        let stepCost = goalStep.getCost(using: goalStep.getAlgorithm())
+        totalCost += stepCost
+        print("\(goalStep.flat)")
+        print("\(goalStep.action), cost = \(stepCost), total cost = \(totalCost)")
     }
 }

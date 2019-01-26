@@ -10,23 +10,29 @@
 
 import Foundation
 
-public class State {
+public class State: Comparable {
+    
     public let action: Action
     public let depth: Int
     public let parent: State?
     public let flat: [Int]
     
     private let tile: Int
+    private let algorithm: Algorithm
     
-    init(action:Action, currentState: [Int], depth: Int, parent: State?, tile: Int) {
+    init(action:Action, currentState: [Int], depth: Int, parent: State?, tile: Int, using algorithm: Algorithm) {
         self.action = action                // How did I get here
         self.flat = currentState            // Who am I
         self.depth = depth                  // How long have I been here
         self.parent = parent                // Where do I come from
         self.tile = tile                    // What am I worth
+        self.algorithm = algorithm          // What is God
     }
     
-    // To-Do
+    public func getAlgorithm() -> Algorithm {
+        return algorithm
+    }
+    
     public func getCost(using algorithm: Algorithm) -> Int {
         switch algorithm {
         case .UniformCost:
@@ -34,9 +40,9 @@ public class State {
         case .BestFirst:
             return heuristic1()
         case .AStar1:
-            return pathCost() + heuristic1()
+            return tile + heuristic1()
         case .AStar2:
-            return pathCost() + heuristic2()
+            return tile + heuristic2()
         default:
             return tile
         }
@@ -50,10 +56,42 @@ public class State {
         }
     }
     
+    // Comparability of states is strictly based on cost
+    public static func < (lhs: State, rhs: State) -> Bool {
+        let algorithm = lhs.getAlgorithm()
+        if algorithm != rhs.getAlgorithm() {
+            debug(msg: "[ERROR] Comparable (<) encountered States using different algorithms!")
+        }
+        
+        switch algorithm {
+        case .BreadthFirst, .DepthFirst:
+            return lhs.tile < rhs.tile
+        default:
+            return lhs.getCost(using: algorithm) < rhs.getCost(using: algorithm)
+        }
+    }
+    
+    // Comparability of states is strictly based on cost
+    public static func == (lhs: State, rhs: State) -> Bool {
+        let algorithm = lhs.getAlgorithm()
+        if algorithm != rhs.getAlgorithm() {
+            debug(msg: "[ERROR] Comparable (==) encountered States using different algorithms!")
+        }
+        
+        switch algorithm {
+        case .BreadthFirst, .DepthFirst:
+            return lhs.tile == rhs.tile
+        default:
+            return lhs.getCost(using: algorithm) < rhs.getCost(using: algorithm)
+        }
+    }
+    
+    // equalTo allows to check for equitability of states in terms of the puzzle layout
     public func equalTo(other state: State) -> Bool {
         return flat.elementsEqual(state.flat)
     }
 
+    // To-Check
     private func pathCost() -> Int {
         if parent == nil {
             return tile
@@ -65,10 +103,10 @@ public class State {
             state = state.parent!
         }
         cost += state.tile
-//        debug(msg: "\(cost)")
         return cost
     }
     
+    // To-Check
     private func heuristic1() -> Int {
         var index = 0
         var misplacedTiles = 0
@@ -81,7 +119,7 @@ public class State {
         return misplacedTiles
     }
     
-    // To-Do
+    // To-Check
     private func heuristic2() -> Int {
         var index = 0
         var manhattanDistances = 0

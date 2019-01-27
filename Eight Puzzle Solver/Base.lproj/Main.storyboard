@@ -193,46 +193,46 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Eight_Puzzle_Solver" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Uo-fBL">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="209"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="erm-S0-poy">
-                                    <rect key="frame" x="0.0" y="0.0" width="465" height="209"/>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Uo-fBL">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="561"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="erm-S0-poy">
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="561"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView ambiguous="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="cfO-M2-C3H">
-                                            <rect key="frame" x="0.0" y="0.0" width="465" height="209"/>
+                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="cfO-M2-C3H">
+                                            <rect key="frame" x="0.0" y="0.0" width="480" height="561"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="465" height="209"/>
-                                            <size key="maxSize" width="476" height="10000000"/>
+                                            <size key="minSize" width="480" height="561"/>
+                                            <size key="maxSize" width="480" height="10000000"/>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="gYk-vB-1Xe">
-                                    <rect key="frame" x="465" y="0.0" width="15" height="209"/>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="gYk-vB-1Xe">
+                                    <rect key="frame" x="464" y="0.0" width="16" height="561"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AS1-6T-ThG">
-                                <rect key="frame" x="20" y="222" width="70" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AS1-6T-ThG">
+                                <rect key="frame" x="14" y="563" width="70" height="32"/>
                                 <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="E7J-9l-tr9">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="solvePuzzleWithSender:" target="rPt-NT-nkU" id="fiN-i3-nMF"/>
+                                    <action selector="start:" target="XfG-lQ-9wD" id="exx-hn-txt"/>
                                 </connections>
                             </button>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zON-ST-LbI">
-                                <rect key="frame" x="95" y="226" width="77" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zON-ST-LbI">
+                                <rect key="frame" x="84" y="567" width="77" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="72" id="EN8-zW-fy6"/>
+                                </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Algorithm" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="0sL-mZ-05S" id="lJM-J6-BDv">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -261,9 +261,11 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VF6-2y-GIV">
-                                <rect key="frame" x="175" y="226" width="77" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VF6-2y-GIV">
+                                <rect key="frame" x="164" y="567" width="77" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="72" id="6Y5-bF-O0x"/>
+                                </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Difficulty" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="UQH-aM-twD" id="wSS-9e-NF0">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -284,16 +286,29 @@
                                 </popUpButtonCell>
                             </popUpButton>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="vdp-Uo-fBL" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="266-ME-NKh"/>
+                            <constraint firstItem="AS1-6T-ThG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="H5I-LP-O0N"/>
+                            <constraint firstItem="AS1-6T-ThG" firstAttribute="top" secondItem="zON-ST-LbI" secondAttribute="top" id="KGD-pV-Yhq"/>
+                            <constraint firstItem="zON-ST-LbI" firstAttribute="leading" secondItem="AS1-6T-ThG" secondAttribute="trailing" constant="8" symbolic="YES" id="PPT-dP-dHZ"/>
+                            <constraint firstAttribute="bottom" secondItem="vdp-Uo-fBL" secondAttribute="bottom" id="TH7-t9-OxT"/>
+                            <constraint firstItem="AS1-6T-ThG" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="9" id="h0c-Be-0Ed"/>
+                            <constraint firstItem="vdp-Uo-fBL" firstAttribute="top" secondItem="AS1-6T-ThG" secondAttribute="bottom" constant="9" id="jCm-cW-11X"/>
+                            <constraint firstItem="VF6-2y-GIV" firstAttribute="leading" secondItem="zON-ST-LbI" secondAttribute="trailing" constant="8" symbolic="YES" id="lwg-Ru-XKG"/>
+                            <constraint firstAttribute="trailing" secondItem="vdp-Uo-fBL" secondAttribute="trailing" id="wfp-Xw-ldg"/>
+                            <constraint firstItem="zON-ST-LbI" firstAttribute="baseline" secondItem="VF6-2y-GIV" secondAttribute="baseline" id="zTk-ql-VkV"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="AlgorithmMenu" destination="lJM-J6-BDv" id="phl-DI-SvC"/>
                         <outlet property="DifficultyMenu" destination="wSS-9e-NF0" id="3du-u7-iYw"/>
                         <outlet property="OutputText" destination="cfO-M2-C3H" id="wUu-x8-hrr"/>
+                        <outlet property="TextView" destination="cfO-M2-C3H" id="7uS-RM-oov"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="76" y="871"/>
         </scene>
     </scenes>
 </document>

@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
     
-    @IBOutlet var OutputText: NSTextView!
+    @IBOutlet var TextView: NSTextView!
     @IBOutlet var AlgorithmMenu: NSPopUpButtonCell!
     @IBOutlet var DifficultyMenu: NSPopUpButtonCell!
     
@@ -24,9 +24,14 @@ class ViewController: NSViewController {
         }
     }
     
-    @IBAction func solvePuzzle(sender: NSButton) {
+    @IBAction func start(_ sender: Any) {
+        print("In start")
+        
         let algorithmItem = AlgorithmMenu.selectedItem!.title
-        let difficultyItem = AlgorithmMenu.selectedItem!.title
+        let difficultyItem = DifficultyMenu.selectedItem!.title
+        
+        print(algorithmItem)
+        print(difficultyItem)
         
         var algorithm: Algorithm
         var difficulty: [Int]
@@ -62,9 +67,8 @@ class ViewController: NSViewController {
         }
         
         // A-Sync with 5 minute limit
-        solve(puzzle: difficulty, with: algorithm)
+        solve(puzzle: difficulty, with: algorithm, outputTo: TextView)
     }
-
 }
 
 

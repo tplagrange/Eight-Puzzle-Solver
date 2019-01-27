@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import Cocoa
 
 // Initiate attempt to find solution
-public func solve(puzzle initialState: [Int], with algorithm: Algorithm) {
+public func solve(puzzle initialState: [Int], with algorithm: Algorithm, outputTo textView: NSTextView) {
     let stateSpace = StateSpace(with: initialState, using: algorithm)
     // 5 minute limit to execution of this function
     while (true) {

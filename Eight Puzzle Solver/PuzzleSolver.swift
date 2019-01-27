@@ -9,27 +9,38 @@
 import Foundation
 import Cocoa
 
-// Initiate attempt to find solution
+/// Attempts to solve the 8-Puzzle with parameters selected from the GUI.
+///
+/// - Parameters:
+///   - initialState: The puzzle before any moves are made by the agent as represented by a 1D array.
+///   - algorithm: The algorithm the agent will use to attempt to solve the puzzle.
+///   - textView: The NSTextView element that will output the solution to the user.
 public func solve(puzzle initialState: [Int], with algorithm: Algorithm, outputTo textView: NSTextView) {
+    // Instantiate the state space with our first state
     let stateSpace = StateSpace(with: initialState, using: algorithm)
-    // 5 minute limit to execution of this function
+    
+    // Counter variable to track the number of states the agent has expanded.
+    var statesExpanded = 0
+
     while (true) {
-        // Error out if we have an empty state space, this means we couldn't find a goal path
+        // Error out if we have an empty state space, this means the agent could not find a goal path.
         if stateSpace.isEmpty() {
-            debug(msg: "[ERROR] state space is empty")
+            textView.string = "The agent encountered an empty state space, this means it was unable to solve the given puzzle."
             return
         }
         
-        // Remove node from the "frontier"
+        // Pop the next state from the state space
         let nextState = stateSpace.pop()
+        statesExpanded += 1
         
         // Check for goal state
         if nextState.isGoal() {
-            outputGoal(from: nextState)
+            textView.string = "Goal state found at depth of \(nextState.depth) after examining \(statesExpanded) nodes\n\n"
+            outputGoal(from: nextState, into: textView)
             return
         }
         
-        // Expand node
+        // Expand the state
         let successors = successor(of: nextState, in: stateSpace)
         
         // Add the states to our state space iff they are not already there and haven't been expanded
@@ -40,79 +51,80 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm, outputT
                 if algorithm == .BreadthFirst || algorithm == .DepthFirst {
                     continue
                 } else {
-                    // If we are using an algorithm that compares cost, push it and worry about state checking after pushing
+                    // If the agent is using an algorithm that compares cost, push it and worry about state checking after pushing
                     stateSpace.push(state: successor)
                 }
             } else {
+                // The state has not been encountered before, add it to our state space
                 stateSpace.push(state: successor)
             }
         }
     }
 }
 
+/// Retrieve all legal states taken from expanded the state passed to the function.
+///
+/// - Parameters:
+///   - previousState: The state to expand.
+///   - stateSpace: The state space within which the agent is attempting to find a solution.
+/// - Returns: An array containing the legal moves starting from 'previousState'.
 private func successor(of previousState: State, in stateSpace: StateSpace) -> [State] {
     var successors = [State]()
     
-    // Determine which square is blank
+    // Determine which tile is blank
     let blank = previousState.blankIndex()
-//    debug(msg: "Blank index set to \(blank)")
     
     // Layout the space as a square to determine the next legal moves
     let squareEdgeSize = Int(Double(squares).squareRoot())
-//    debug(msg: "Square edge was set to \(squareEdgeSize)")
     
     // Determine the position of the blank in the square
     let row = blank / squareEdgeSize
     let col = blank % squareEdgeSize
-//    debug(msg: "Blank is at \(row),\(col)")
     
     // Determine which moves can be made from the blank (imagined as the blank is moving)
     var legalMoves = [Action]()
     
+    // Assess the outcome of each of the 4 theoretically possible moves
     for theoreticalMove in theoreticalMoves {
         var newRow: Int
         var newCol: Int
         
-        // Check against theoretical moves
         switch theoreticalMove {
         case .up:
             newRow = row - 1
             newCol = col
+            // If the theoretical move still places the blank within the square, the agent classifies it as a legal move.
             if newRow >= 0 {
                 legalMoves.append(theoreticalMove)
-//                debug(msg: "We can move up")
             }
         case .right:
             newRow = row
             newCol = col + 1
             if newCol < squareEdgeSize {
                 legalMoves.append(theoreticalMove)
-//                debug(msg: "We can move right")
             }
         case .down:
             newRow = row + 1
             newCol = col
             if newRow < squareEdgeSize {
                 legalMoves.append(theoreticalMove)
-//                debug(msg: "We can move down")
             }
         case .left:
             newRow = row
             newCol = col - 1
             if newCol >= 0 {
                 legalMoves.append(theoreticalMove)
-//                debug(msg: "We can move left")
             }
         }
     }
     
-    // The program has now determined which moves are legal; stored in the array "legalMoves"
-    // The program must now create new states for each legal move
-    
+    // The agent has now determined which moves are legal; stored in the array "legalMoves"
+
+    // The agent must now create new states for each legal move
     for legalMove in legalMoves {
         let tile: Int // The numbered tile that will be moved
         
-        // First we will create a duplicate representation of the state
+        // First we will create a duplicate representation of the existing state
         var newRepresentation = [Int](repeating: 0, count: squares)
         for i in 0..<squares {
             newRepresentation[i] = previousState.flat[i]
@@ -147,7 +159,12 @@ private func successor(of previousState: State, in stateSpace: StateSpace) -> [S
     return successors
 }
 
-private func outputGoal(from state: State) {
+/// GUI Helper which outputs a path to the goal state. No logic towards solving the puzzle is placed here.
+///
+/// - Parameters:
+///   - state: The state which was found to match the goal state by the agent.
+///   - textView: The NSTextView object that will store the outputted solution.
+private func outputGoal(from state: State, into textView: NSTextView) {
     var currentState = state
     var goalPath = [State]()
     while currentState.parent != nil {
@@ -159,7 +176,13 @@ private func outputGoal(from state: State) {
     for goalStep in goalPath {
         let stepCost = goalStep.getCost(using: goalStep.getAlgorithm())
         totalCost += stepCost
-        print("\(goalStep.flat)")
-        print("\(goalStep.action), cost = \(stepCost), total cost = \(totalCost)")
+        if (goalStep.depth == 0){
+            textView.string.append("Start:\n")
+            textView.string.append("\n\(goalStep.toString())\n\n")
+        } else {
+            textView.string.append("\(goalStep.action), cost = \(stepCost), total cost = \(totalCost)")
+            textView.string.append("\n\n\(goalStep.toString())\n\n")
+        }
     }
+    textView.string.append("Goal path found with cost of: \(totalCost)")
 }

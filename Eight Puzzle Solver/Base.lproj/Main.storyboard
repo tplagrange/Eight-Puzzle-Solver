@@ -199,22 +199,22 @@
                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Uo-fBL">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="561"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="erm-S0-poy">
-                                    <rect key="frame" x="0.0" y="0.0" width="480" height="561"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="465" height="561"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="cfO-M2-C3H">
-                                            <rect key="frame" x="0.0" y="0.0" width="480" height="561"/>
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" incrementalSearchingEnabled="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="cfO-M2-C3H">
+                                            <rect key="frame" x="0.0" y="0.0" width="465" height="561"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="480" height="561"/>
+                                            <size key="minSize" width="465" height="561"/>
                                             <size key="maxSize" width="480" height="10000000"/>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>
                                 </clipView>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="gYk-vB-1Xe">
-                                    <rect key="frame" x="464" y="0.0" width="16" height="561"/>
+                                    <rect key="frame" x="465" y="0.0" width="15" height="561"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -278,7 +278,7 @@
                                             <menuItem title="Medium" id="SWr-87-Gh8">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
-                                            <menuItem title="Item" id="VCb-HI-tfR">
+                                            <menuItem title="Hard" id="VCb-HI-tfR">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
                                         </items>

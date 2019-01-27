@@ -24,8 +24,11 @@ class ViewController: NSViewController {
         }
     }
     
-    @IBAction func start(_ sender: Any) {
-        print("In start")
+    /// A function called by the "Start" button that checks parameters were correctly set before allowing the agent to attempt to solve the problem.
+    ///
+    /// - Parameter sender: The class of the GUI object responsible for calling the funciton.
+    @IBAction func start(_ sender: NSButton) {
+        TextView.string = ""
         
         let algorithmItem = AlgorithmMenu.selectedItem!.title
         let difficultyItem = DifficultyMenu.selectedItem!.title
@@ -65,7 +68,6 @@ class ViewController: NSViewController {
             // alert
             return
         }
-        
         // A-Sync with 5 minute limit
         solve(puzzle: difficulty, with: algorithm, outputTo: TextView)
     }

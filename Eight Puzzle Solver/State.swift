@@ -4,12 +4,11 @@
  
  Created by Lagrange, Thomas on 1/18/19.
  Copyright © 2019 Thomas Lagrange. All rights reserved.
- 
- State is a class that represents a state within the State Space as a node.
  */
 
 import Foundation
 
+/// State is a class that represents an 8-Puzzle state within the StateSpace class as a node.
 public class State: Comparable {
     
     public let action: Action
@@ -21,14 +20,17 @@ public class State: Comparable {
     private let algorithm: Algorithm
     
     init(action:Action, currentState: [Int], depth: Int, parent: State?, tile: Int, using algorithm: Algorithm) {
-        self.action = action                // How did I get here
-        self.flat = currentState            // Who am I
-        self.depth = depth                  // How long have I been here
-        self.parent = parent                // Where do I come from
-        self.tile = tile                    // What am I worth
-        self.algorithm = algorithm          // What is God
+        self.action = action                // The step taken to reach this state.
+        self.flat = currentState            // A 1D array representation of the 8-Puzzle board.
+        self.depth = depth                  // The depth in the search tree the agent encountered this state (root.depth == 0).
+        self.parent = parent                // The parent node in the search tree.
+        self.tile = tile                    // The number of the tile that was moved to reach the state.
+        self.algorithm = algorithm          // The algorithm the agent used when encountering this state (important for determining the state cost)
     }
     
+    /// Getter method for returning the algorithm the agent used to encounter this state.
+    ///
+    /// - Returns: The algorithm mentioned above.
     public func getAlgorithm() -> Algorithm {
         return algorithm
     }
@@ -159,11 +161,9 @@ public class State: Comparable {
     public func toString() -> String {
         return
 """
-\(flat[0])--\(flat[1])--\(flat[2])
-|  |  |
-\(flat[3])--\(flat[4])--\(flat[5])
-|  |  |
-\(flat[6])--\(flat[7])--\(flat[8])
+\(flat[0]) \(flat[1]) \(flat[2])
+\(flat[3]) \(flat[4]) \(flat[5])
+\(flat[6]) \(flat[7]) \(flat[8])
 """
     }
     

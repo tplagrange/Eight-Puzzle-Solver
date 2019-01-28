@@ -12,7 +12,8 @@ import Foundation
 /// A representation of the State Space that has or will be expanded by the agent.
 public class StateSpace {
     // Backing data structure
-    private var list: [State]
+    private var queue: [State]
+    private var queueMaxSize = 1
     
     public let algorithm: Algorithm
     public var popped = [State]()
@@ -20,18 +21,18 @@ public class StateSpace {
     
     init(with start: [Int], using algorithm: Algorithm) {
         self.algorithm = algorithm // The algorithm used by the agent within this state space.
-        self.list = [State]()      // The backing data structure used by the agent.
+        self.queue = [State]()      // The backing data structure used by the agent.
         
         // Instantiate the State Space with the starting State.
         let startState = State(action: .down, currentState: start, depth: 0, parent: nil, tile: 0, using: algorithm)
-        list.append(startState)
+        queue.append(startState)
     }
    
     /// Helper function to determine if the state space has no more states, which would be an error.
     ///
     /// - Returns: True iff the backing data structure for the state space is empty.
     public func isEmpty() -> Bool {
-        return list.count == 0
+        return queue.count == 0
     }
     
     /// Function to determine the correct State to expand next depending on the algorithm used.
@@ -40,11 +41,11 @@ public class StateSpace {
     public func peek() -> State {
         switch algorithm {
         case .BreadthFirst:
-            return list[0]
+            return queue[0]
         case .DepthFirst:
-            return list.last!
+            return queue.last!
         default:
-            return list.min()!
+            return queue.min()!
         }
     }
 
@@ -58,13 +59,14 @@ public class StateSpace {
         
         switch algorithm {
         case .BreadthFirst:
-            list.remove(at: 0)
+            queue.remove(at: 0)
         case .DepthFirst:
-            list.remove(at: list.count - 1)
+            queue.remove(at: queue.count - 1)
         default:
-            let toRemove = list.firstIndex(where: { $0 === toPop })
-            list.remove(at: toRemove!)
+            let toRemove = queue.firstIndex(where: { $0 === toPop })
+            queue.remove(at: toRemove!)
         }
+        updateMaxSize()
         
         return toPop
     }
@@ -73,20 +75,23 @@ public class StateSpace {
     ///
     /// - Parameter state: The State to add to the State Space.
     public func push(state: State) {
+        queueMaxSize += 1
         switch algorithm {
         case .DepthFirst:
-            list.insert(state, at: 0)
+            queue.insert(state, at: 0)
         default:
-            list.append(state)
+            queue.append(state)
         }
         stateCheck()
+        updateMaxSize()
     }
     
     /// Deletes the given State from the State Space's backing data structure.
     ///
     /// - Parameter state: The State to delete from the backing data structure.
     public func delete(state: State) {
-        list.removeAll(where: { $0 === state })
+        queue.removeAll(where: { $0 === state })
+        updateMaxSize()
     }
     
     /// Checks if the State Space has an array with an identical 1D representation of the board.
@@ -94,7 +99,7 @@ public class StateSpace {
     /// - Parameter state: The State to compare to the State Space.
     /// - Returns: True iff a State already exists in the State Space with the same board layout.
     public func contains(state: State) -> Bool {
-        return list.contains(where: { $0.equalTo(other: state) })
+        return queue.contains(where: { $0.equalTo(other: state) })
     }
     
     /// Collects all the States within the State Space with identical 1D representation of the board.
@@ -104,7 +109,7 @@ public class StateSpace {
     /// - Returns: An array of size >= 0 with the duplicate States
     public func getDuplicates(of state: State) -> [State] {
         var duplicates = [State]()
-        for node in list {
+        for node in queue {
             if node.equalTo(other: state) {
                 duplicates.append(node)
             }
@@ -115,7 +120,7 @@ public class StateSpace {
     /// A repeated state checking function which ensures that when duplicates are present, only the lowest cost duplicate remains in the State Space.
     private func stateCheck() {
         var equalStates: [State]
-        for node in list {
+        for node in queue {
             equalStates = getDuplicates(of: node)
             equalStates.append(node)
             let minimum = equalStates.min()!
@@ -124,6 +129,27 @@ public class StateSpace {
                     delete(state: equalState)
                 }
             }
+        }
+    }
+    
+    /// Helper function to determine the numer of nodes popped off the queue.
+    ///
+    /// - Returns: Size of popped array
+    public func numPopped() -> Int {
+        return popped.count
+    }
+    
+    /// Helper function to determine the space cost of the agent's solution
+    ///
+    /// - Returns: The size of the queue at it's max
+    public func getMaxSize() -> Int {
+        return queueMaxSize
+    }
+    
+    /// Helper function to maintain the maximum size of the queue.
+    private func updateMaxSize() {
+        if queueMaxSize < queue.count {
+            queueMaxSize = queue.count
         }
     }
 }

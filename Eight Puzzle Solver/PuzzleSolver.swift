@@ -35,7 +35,10 @@ public func solve(puzzle initialState: [Int], with algorithm: Algorithm, outputT
         
         // Check for goal state
         if nextState.isGoal() {
-            textView.string = "Goal state found at depth of \(nextState.depth) after examining \(statesExpanded) nodes\n\n"
+            textView.string = "Goal state found!\n"
+            textView.string.append("Length: \(nextState.depth)\n")
+            textView.string.append("Time: \(stateSpace.numPopped())\n")
+            textView.string.append("Space: \(stateSpace.getMaxSize())\n\n")
             outputGoal(from: nextState, into: textView)
             return
         }
@@ -194,5 +197,5 @@ private func outputGoal(from state: State, into textView: NSTextView) {
             textView.string.append("\n\n\(goalStep.toString())\n\n")
         }
     }
-    textView.string.append("Goal path found with cost of: \(totalCost)")
+    textView.string.append("Goal path found with cost of: \(totalCost)\n") // Cost of solution path
 }

@@ -229,10 +229,7 @@
                                 </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zON-ST-LbI">
-                                <rect key="frame" x="84" y="567" width="77" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="72" id="EN8-zW-fy6"/>
-                                </constraints>
+                                <rect key="frame" x="84" y="567" width="119" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Algorithm" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="0sL-mZ-05S" id="lJM-J6-BDv">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -262,10 +259,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VF6-2y-GIV">
-                                <rect key="frame" x="164" y="567" width="77" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="72" id="6Y5-bF-O0x"/>
-                                </constraints>
+                                <rect key="frame" x="206" y="567" width="93" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Difficulty" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="UQH-aM-twD" id="wSS-9e-NF0">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -287,16 +281,16 @@
                             </popUpButton>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="vdp-Uo-fBL" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="266-ME-NKh"/>
-                            <constraint firstItem="AS1-6T-ThG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="H5I-LP-O0N"/>
-                            <constraint firstItem="AS1-6T-ThG" firstAttribute="top" secondItem="zON-ST-LbI" secondAttribute="top" id="KGD-pV-Yhq"/>
-                            <constraint firstItem="zON-ST-LbI" firstAttribute="leading" secondItem="AS1-6T-ThG" secondAttribute="trailing" constant="8" symbolic="YES" id="PPT-dP-dHZ"/>
-                            <constraint firstAttribute="bottom" secondItem="vdp-Uo-fBL" secondAttribute="bottom" id="TH7-t9-OxT"/>
-                            <constraint firstItem="AS1-6T-ThG" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="9" id="h0c-Be-0Ed"/>
-                            <constraint firstItem="vdp-Uo-fBL" firstAttribute="top" secondItem="AS1-6T-ThG" secondAttribute="bottom" constant="9" id="jCm-cW-11X"/>
-                            <constraint firstItem="VF6-2y-GIV" firstAttribute="leading" secondItem="zON-ST-LbI" secondAttribute="trailing" constant="8" symbolic="YES" id="lwg-Ru-XKG"/>
-                            <constraint firstAttribute="trailing" secondItem="vdp-Uo-fBL" secondAttribute="trailing" id="wfp-Xw-ldg"/>
-                            <constraint firstItem="zON-ST-LbI" firstAttribute="baseline" secondItem="VF6-2y-GIV" secondAttribute="baseline" id="zTk-ql-VkV"/>
+                            <constraint firstAttribute="trailing" secondItem="vdp-Uo-fBL" secondAttribute="trailing" id="9kO-1h-2r4"/>
+                            <constraint firstItem="zON-ST-LbI" firstAttribute="baseline" secondItem="VF6-2y-GIV" secondAttribute="baseline" id="BFF-91-Rhl"/>
+                            <constraint firstItem="AS1-6T-ThG" firstAttribute="top" secondItem="zON-ST-LbI" secondAttribute="top" id="FAy-I0-Rij"/>
+                            <constraint firstItem="VF6-2y-GIV" firstAttribute="leading" secondItem="zON-ST-LbI" secondAttribute="trailing" constant="8" symbolic="YES" id="FL3-Vg-EI5"/>
+                            <constraint firstItem="AS1-6T-ThG" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="9" id="GMP-Il-tjO"/>
+                            <constraint firstItem="zON-ST-LbI" firstAttribute="leading" secondItem="AS1-6T-ThG" secondAttribute="trailing" constant="8" symbolic="YES" id="Jmr-jE-Cjq"/>
+                            <constraint firstAttribute="bottom" secondItem="vdp-Uo-fBL" secondAttribute="bottom" id="Jog-R8-7yR"/>
+                            <constraint firstItem="vdp-Uo-fBL" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="KoI-Zp-F17"/>
+                            <constraint firstItem="AS1-6T-ThG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="j9f-4p-5FI"/>
+                            <constraint firstItem="vdp-Uo-fBL" firstAttribute="top" secondItem="AS1-6T-ThG" secondAttribute="bottom" constant="9" id="oGH-O3-zOB"/>
                         </constraints>
                     </view>
                     <connections>

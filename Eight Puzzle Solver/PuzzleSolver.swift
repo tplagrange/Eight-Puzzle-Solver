@@ -133,8 +133,11 @@ private func successor(of previousState: State, in stateSpace: StateSpace) -> [S
         // Create a new state depending on the move
         switch legalMove {
         case .up:
+            // The tile to be moved is not the same as the blank tile, so this calculates the tile that will be moved
             tile = previousState.flat[(row-1) * 3 + col]
+            // Assign the value of the tile to the position where the blank was
             newRepresentation[row * 3 + col] = tile
+            // Assign the old position of the tile to be blank
             newRepresentation[(row-1) * 3 + col] = 0
         case .right:
             tile = previousState.flat[row * 3 + col + 1]
@@ -167,19 +170,26 @@ private func successor(of previousState: State, in stateSpace: StateSpace) -> [S
 private func outputGoal(from state: State, into textView: NSTextView) {
     var currentState = state
     var goalPath = [State]()
+    // Work our way up back to the starting state
     while currentState.parent != nil {
         goalPath.insert(currentState, at: 0)
         currentState = currentState.parent!
     }
+    // Ensure the starting state is accounted for (the loop will not encounter the start state since it's parent value is nil)
     goalPath.insert(currentState, at: 0)
     var totalCost = 0
+    // Stepping through the collected path from the start state
     for goalStep in goalPath {
+        // Calculate the value of the step depending on the algorithm used
         let stepCost = goalStep.getCost(using: goalStep.getAlgorithm())
+        // Increment the total cost
         totalCost += stepCost
         if (goalStep.depth == 0){
+            // GUI formatting for the start state
             textView.string.append("Start:\n")
             textView.string.append("\n\(goalStep.toString())\n\n")
         } else {
+            // GUI formatting for the other states
             textView.string.append("\(goalStep.action), cost = \(stepCost), total cost = \(totalCost)")
             textView.string.append("\n\n\(goalStep.toString())\n\n")
         }

@@ -32,16 +32,16 @@ public enum Algorithm {
     case BreadthFirst
     case DepthFirst
     case UniformCost
-    case BestFirst  // h = # of tiles that are not in correct position
+    case BestFirst  // h = # of tiles that are not in correct position (Greedy algorithm)
     case AStar1     // h = # of tiles that are not in correct position
     case AStar2     // h = sum of Manhattan distances between all tiles and their correct positions
 }
 
 // Globally available variables
-public let squares = 9      // The number of squares in our puzzle
-public let theoreticalMoves = [Action.up, Action.right, Action.down, Action.left]
-public let debugSetting = true
-public let goal =   [1, 2, 3, 8, 0, 4, 7, 6, 5]
-public let easy =   [ 1, 3, 4, 8, 6, 2, 7, 0, 5 ]
-public let medium = [ 2, 8, 1, 0, 4, 3, 7, 6, 5 ]
-public let hard =   [ 5, 6, 7, 4, 0, 8, 3, 2, 1 ]
+public let squares = 9  // The number of squares in our puzzle
+public let theoreticalMoves = [Action.up, Action.right, Action.down, Action.left]   // All possible (not neccessarily legal) moves
+public let debugSetting = false // Used for debugging the application
+public let goal =   [1, 2, 3, 8, 0, 4, 7, 6, 5]     // The goal state the agent will attempt to reach
+public let easy =   [ 1, 3, 4, 8, 6, 2, 7, 0, 5 ]   // An easy starting board layout
+public let medium = [ 2, 8, 1, 0, 4, 3, 7, 6, 5 ]   // A moderately difficult starting layout
+public let hard =   [ 5, 6, 7, 4, 0, 8, 3, 2, 1 ]   // A difficult start layout for the agent to solve.

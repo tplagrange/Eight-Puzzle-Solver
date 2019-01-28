@@ -32,7 +32,7 @@ public class StateSpace {
     ///
     /// - Returns: True iff the backing data structure for the state space is empty.
     public func isEmpty() -> Bool {
-        return queue.count == 0
+        return queue.isEmpty
     }
     
     /// Function to determine the correct State to expand next depending on the algorithm used.
@@ -45,7 +45,7 @@ public class StateSpace {
         case .DepthFirst:
             return queue.last!
         default:
-            return queue.min()!
+            return queue.first!
         }
     }
 
@@ -63,8 +63,11 @@ public class StateSpace {
         case .DepthFirst:
             queue.remove(at: queue.count - 1)
         default:
-            let toRemove = queue.firstIndex(where: { $0 === toPop })
-            queue.remove(at: toRemove!)
+            queue.swapAt(0, queue.count - 1)
+            queue.remove(at: queue.count - 1)
+            if !isEmpty() {
+                sink(from: 0)
+            }
         }
         updateMaxSize()
         
@@ -75,12 +78,14 @@ public class StateSpace {
     ///
     /// - Parameter state: The State to add to the State Space.
     public func push(state: State) {
-        queueMaxSize += 1
         switch algorithm {
+        case .BreadthFirst:
+            queue.append(state)
         case .DepthFirst:
             queue.insert(state, at: 0)
         default:
             queue.append(state)
+            swim(from: queue.count - 1)
         }
         stateCheck()
         updateMaxSize()
@@ -90,7 +95,23 @@ public class StateSpace {
     ///
     /// - Parameter state: The State to delete from the backing data structure.
     public func delete(state: State) {
-        queue.removeAll(where: { $0 === state })
+        if isEmpty() {
+            return
+        }
+        let indexToDelete = queue.index(where: { $0 === state })!
+        if indexToDelete == queue.count - 1 {
+            queue.remove(at: queue.count - 1)
+        } else {
+            queue.swapAt(indexToDelete, queue.count - 1)
+            queue.remove(at: queue.count - 1)
+            let replacementIndex = indexToDelete
+            if firstIsLess(first: replacementIndex, second: parent(of: replacementIndex)) {
+                swim(from: replacementIndex)
+            } else {
+                sink(from: replacementIndex)
+            }
+        }
+        
         updateMaxSize()
     }
     
@@ -110,7 +131,9 @@ public class StateSpace {
     public func getDuplicates(of state: State) -> [State] {
         var duplicates = [State]()
         for node in queue {
-            if node.equalTo(other: state) {
+            if node === state {
+                continue
+            } else if node.equalTo(other: state) {
                 duplicates.append(node)
             }
         }
@@ -119,16 +142,18 @@ public class StateSpace {
 
     /// A repeated state checking function which ensures that when duplicates are present, only the lowest cost duplicate remains in the State Space.
     private func stateCheck() {
-        var equalStates: [State]
-        for node in queue {
-            equalStates = getDuplicates(of: node)
+        var index = 0
+        while (index < queue.count) {
+            let node = queue[index]
+            var equalStates = getDuplicates(of: node)
             equalStates.append(node)
             let minimum = equalStates.min()!
             for equalState in equalStates {
-                if equalState != minimum && equalState > minimum {
+                if equalState > minimum {
                     delete(state: equalState)
                 }
             }
+            index += 1
         }
     }
     
@@ -151,5 +176,96 @@ public class StateSpace {
         if queueMaxSize < queue.count {
             queueMaxSize = queue.count
         }
+    }
+    
+    ///
+    /// The following are functions that extend the queue's funcitonality to that of a min-heap
+    ///
+    
+    /// Checks if the given index is the root of the heap
+    ///
+    /// - Parameter index: Index to check
+    /// - Returns: True iff the index is 0
+    private func isRoot(index: Int) -> Bool {
+        return index == 0
+    }
+    
+    /// Calculates the theoretical index of the left child
+    ///
+    /// - Parameter index: Parent index
+    /// - Returns: The theoretical index of the parent's left child
+    private func leftChild(from parentIndex: Int) -> Int {
+        return (2 * parentIndex) + 1
+    }
+ 
+    /// Calculates the theoretical index of the right child
+    ///
+    /// - Parameter index: Parent index
+    /// - Returns: The theoretical index of the parent's right child
+    private func rightChild(from parentIndex: Int) -> Int {
+        return (2 * parentIndex) + 2
+    }
+    
+    /// Calculates the index of the elements parent in the heap
+    ///
+    /// - Parameter index: Child to find the parent of.
+    /// - Returns: The index of the child's parent in the heap.
+    private func parent(of index: Int) -> Int {
+        return (index - 1) / 2
+    }
+    
+    /// A function that ensures that the element at the first index passed is less than the element at the second index passed.
+    ///
+    /// - Parameters:
+    ///   - indexOne: The index of the first element.
+    ///   - indexTwo: The index of the second element.
+    /// - Returns: True iff the first index is smaller than the second element.
+    private func firstIsLess(first indexOne: Int, second indexTwo: Int) -> Bool {
+        return queue[indexOne] < queue[indexTwo]
+    }
+    
+    /// A function to calculate which index of the two passed has an element at that position which is minimum.
+    ///
+    /// - Parameters:
+    ///   - parentIndex: The parent index to check
+    ///   - childIndex: The child index to check
+    /// - Returns: The index who's position holds the State with the lowest cost.
+    private func minIndex(of parentIndex: Int, and childIndex: Int) -> Int {
+        if childIndex < queue.count && firstIsLess(first: childIndex, second: parentIndex) {
+            return childIndex
+        } else {
+            return parentIndex
+        }
+    }
+    
+    /// Determines which child of the parent holds the minimum value.
+    ///
+    /// - Parameter parentIndex: Parent to check
+    /// - Returns: The index of the child element with the minimum value (or the parent index if it's minimum).
+    private func minChild(of parentIndex: Int) -> Int {
+        return minIndex(of:
+                minIndex(of: parentIndex, and: leftChild(from: parentIndex)),
+                and: rightChild(from: parentIndex))
+    }
+    
+    private func sink(from index: Int) {
+        let childIndex = minChild(of: index)
+        if index == childIndex {
+            return
+        } else {
+            queue.swapAt(index, childIndex)
+            sink(from: childIndex)
+        }
+    }
+    
+    private func swim(from index: Int) {
+        let parentIndex = parent(of: index)
+        if (isRoot(index: index)) {
+            return
+        } else if firstIsLess(first: parentIndex, second: index) {
+            return
+        }
+        queue.swapAt(index, parentIndex)
+        swim(from: parentIndex)
     }
 }

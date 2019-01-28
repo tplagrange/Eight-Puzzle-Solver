@@ -66,7 +66,7 @@ public class State: Comparable {
         case .BreadthFirst, .DepthFirst:
             return lhs.tile == rhs.tile
         default:
-            return lhs.getCost(using: algorithm) < rhs.getCost(using: algorithm)
+            return lhs.getCost(using: algorithm) == rhs.getCost(using: algorithm)
         }
     }
     
